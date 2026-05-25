@@ -1,5 +1,4 @@
-"use strict";
-alert("Ура, JavaScript работает я так этому рад, а то он не хотел работать!");
+
 class StorageService {
   constructor() {
     this.txKey = 'fin_transactions';
@@ -46,3 +45,30 @@ class StorageService {
     localStorage.setItem(this.txKey, JSON.stringify(transactions));
   }
 }
+
+class Validator {
+  static validateAmount(value) {
+    const num = Number(value);
+    if (!value || isNaN(num) || num <= 0) {
+      return { isValid: false, message: 'Введите корректную сумму больше 0' };
+    }
+    return { isValid: true, message: '' };
+  }
+
+  static validateCategory(value) {
+    if (!value || value.trim().length < 2) {
+      return { isValid: false, message: 'Минимум 2 символа для названия' };
+    }
+    return { isValid: true, message: '' };
+  }
+
+  static validatePhone(value) {
+    if (!value) return { isValid: true, message: '' }; // Необязательное поле
+    const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
+    if (!phoneRegex.test(value)) {
+      return { isValid: false, message: 'Формат: +7 (XXX) XXX-XX-XX' };
+    }
+    return { isValid: true, message: '' };
+  }
+}
+
