@@ -31,3 +31,35 @@ body {
   color: var(--color-text-main);
   line-height: 1.5;
 }
+a { text-decoration: none; color: inherit; }
+button, input, select { font: inherit; background: none; border: none; }
+
+.page__layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background-color: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar__logo { font-weight: 700; font-size: 22px; margin-bottom: 40px; letter-spacing: -0.5px; }
+.sidebar__list { display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
+.sidebar__link {
+  padding: 12px 16px; border-radius: var(--border-radius-md);
+  color: var(--color-text-muted); font-weight: 500; transition: all 0.2s;
+}
+.sidebar__link:hover { background-color: var(--color-border); color: var(--color-text-main); }
+.sidebar__link--active {
+  background-color: var(--color-primary) !important;
+  color: var(--color-bg-main) !important;
+}
+
+.dashboard { padding: 40px; overflow-y: auto; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+.header__title { font-size: 28px; font-weight: 700; }
+
