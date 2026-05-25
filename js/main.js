@@ -71,4 +71,72 @@ class Validator {
     return { isValid: true, message: '' };
   }
 }
+class TransactionForm {
+  constructor(formElement, onSubmitSuccess) {
+    this.form = formElement;
+    this.onSubmitSuccess = onSubmitSuccess;
+    this.amountInput = document.getElementById('tx-amount');
+    this.categoryInput = document.getElementById('tx-category');
+    this.phoneInput = document.getElementById('tx-phone');
+    this.typeSelect = document.getElementById('tx-type');
+
+    this.initEvents();
+  }
+
+  initEvents() {
+    this.phoneInput.addEventListener('input', (e) => {
+      let matrix = '+7 (___) ___-__-__',
+          i = 0,
+          def = matrix.replace(/\D/g, ''),
+          val = e.target.value.replace(/\D/g, '');
+      if (def.length >= val.length) val = def;
+      e.target.value = matrix.replace(/./g, function(a) {
+          return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : a;
+      });
+    });
+
+    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+  }
+
+  showError(input, message) {
+    input.classList.add('form-input--error');
+    const errSpan = input.nextElementSibling;
+    if (errSpan && errSpan.classList.contains('form__error-message')) {
+      errSpan.textContent = message;
+    }
+  }
+
+  clearErrors() {
+    this.form.querySelectorAll('.form-input').forEach(i => i.classList.remove('form-input--error'));
+    this.form.querySelectorAll('.form__error-message').forEach(s => s.textContent = '');
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.clearErrors();
+
+    const amountVal = this.amountInput.value.trim();
+    const catVal = this.categoryInput.value.trim();
+    const phoneVal = this.phoneInput.value.trim();
+
+    const amountRes = Validator.validateAmount(amountVal);
+    const catRes = Validator.validateCategory(catVal);
+    const phoneRes = Validator.validatePhone(phoneVal);
+
+    let isFormValid = true;
+
+    if (!amountRes.isValid) { this.showError(this.amountInput, amountRes.message); isFormValid = false; }
+    if (!catRes.isValid) { this.showError(this.categoryInput, catRes.message); isFormValid = false; }
+    if (!phoneRes.isValid) { this.showError(this.phoneInput, phoneRes.message); isFormValid = false; }
+
+    if (isFormValid) {
+      this.onSubmitSuccess({
+        amount: Number(amountVal),
+        type: this.typeSelect.value,
+        category: catVal,
+        phone: phoneVal
+      });
+    }
+  }
+}
 
