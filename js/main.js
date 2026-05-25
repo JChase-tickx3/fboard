@@ -1,9 +1,8 @@
-
 class StorageService {
   constructor() {
     this.txKey = 'fin_transactions';
     this.themeKey = 'fin_theme';
-    this.currencyKey = 'fin_currency'; // Ключ для валюты
+    this.currencyKey = 'fin_currency'; // Ключ для хранения выбранной валюты
   }
 
   getTheme() {
@@ -63,7 +62,7 @@ class Validator {
   }
 
   static validatePhone(value) {
-    if (!value) return { isValid: true, message: '' }; // Необязательное поле
+    if (!value) return { isValid: true, message: '' };
     const phoneRegex = /^\+7\s\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
     if (!phoneRegex.test(value)) {
       return { isValid: false, message: 'Формат: +7 (XXX) XXX-XX-XX' };
@@ -71,6 +70,7 @@ class Validator {
     return { isValid: true, message: '' };
   }
 }
+
 class TransactionForm {
   constructor(formElement, onSubmitSuccess) {
     this.form = formElement;
@@ -139,6 +139,7 @@ class TransactionForm {
     }
   }
 }
+
 class Dashboard {
   constructor(storageService) {
     this.storage = storageService;
@@ -148,15 +149,46 @@ class Dashboard {
     this.elExpense = document.getElementById('val-expense');
     this.elList = document.getElementById('transaction-list');
     this.elFilterCategory = document.getElementById('filter-category');
+    this.elCurrencySetting = document.getElementById('settings-currency'); // Ссылка на селект валюты
 
     this.fType = document.getElementById('filter-type');
     this.fCategory = document.getElementById('filter-category');
     this.fSearch = document.getElementById('filter-search');
 
-    this.formatter = new Intl.NumberFormat('ru-KZ', { style: 'currency', currency: 'KZT', minimumFractionDigits: 0 });
-
+    this.updateFormatter();
+    this.initCurrencySetting();
     this.initFilters();
     this.updateDashboard();
+  }
+
+  // Обновление локали и значка валюты под выбор пользователя
+  updateFormatter() {
+    const currentCurrency = this.storage.getCurrency();
+    const locales = {
+      'KZT': 'ru-KZ',
+      'USD': 'en-US',
+      'EUR': 'de-DE',
+      'RUB': 'ru-RU'
+    };
+
+    this.formatter = new Intl.NumberFormat(locales[currentCurrency] || 'ru-KZ', {
+      style: 'currency',
+      currency: currentCurrency,
+      minimumFractionDigits: 0
+    });
+  }
+
+  // Привязка события изменения валюты в настройках
+  initCurrencySetting() {
+    if (!this.elCurrencySetting) return;
+    
+    this.elCurrencySetting.value = this.storage.getCurrency();
+
+    this.elCurrencySetting.addEventListener('change', (e) => {
+      this.storage.setCurrency(e.target.value);
+      this.updateFormatter();
+      this.updateDashboard(); // Пересчитываем и перерисовываем всё приложение
+    });
   }
 
   initFilters() {
@@ -170,7 +202,6 @@ class Dashboard {
     const transactions = this.storage.getTransactions();
     this.updateCategoriesDropdown(transactions);
 
-
     const filtered = transactions.filter(tx => {
       const typeMatch = !this.fType || this.fType.value === 'all' || tx.type === this.fType.value;
       const catMatch = !this.fCategory || this.fCategory.value === 'all' || tx.category === this.fCategory.value;
@@ -182,7 +213,6 @@ class Dashboard {
       }
       return typeMatch && catMatch && searchMatch;
     });
-
 
     let total = 0, income = 0, expense = 0;
     transactions.forEach(tx => {
@@ -258,7 +288,6 @@ class Dashboard {
       this.elList.appendChild(row);
     });
 
-
     this.elList.querySelectorAll('.btn-delete').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const id = Number(e.target.getAttribute('data-id'));
@@ -269,6 +298,7 @@ class Dashboard {
   }
 }
 
+// Инициализация при загрузке DOM
 document.addEventListener('DOMContentLoaded', () => {
   const storage = new StorageService();
   const dashboard = new Dashboard(storage);
