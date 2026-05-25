@@ -27,7 +27,7 @@
         <button id="btn-open-modal" class="button button--primary">Добавить транзацию</button>
       </header>
 
-      < id="view-overview" class="view-section">
+      <div id="view-overview" class="view-section">
         <section class="stats-panel">
           <div class="stats-card">
             <h3 class="stats-card__title">Общий баланс</h3>
@@ -42,4 +42,19 @@
             <div id="val-expense" class="stats-card__amount stats-card__amount--negative">0 ₸</div>
           </div>
         </section>
-    
+      </div>
+
+      <div id="view-transactions" class="view-section" style="display: none;">
+        <section class="transaction-module">
+          <div class="transaction-module__controls">
+            <form id="filter-form" class="filter-form">
+              <div class="filter-form__group">
+                <label class="filter-form__label">Тип операции</label>
+                <select id="filter-type" class="form-input form-input--select">
+                  <option value="all">Все типы</option>
+                  <option value="income">Доход</option>
+                  <option value="expense">Расход</option>
+                </select>
+              </div>
+
+              
