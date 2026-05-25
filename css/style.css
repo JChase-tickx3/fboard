@@ -1,0 +1,135 @@
+/* ==========================================================================
+   БАЗОВЫЕ НАСТРОЙКИ, ПЕРЕМЕННЫЕ И СБРОС (RESET)
+   ========================================================================== */
+:root {
+  --color-bg-main: #ffffff;
+  --color-bg-secondary: #f6f6f6;
+  --color-text-main: #000000;
+  --color-text-muted: #666666;
+  --color-border: #e2e2e2;
+  --color-primary: #000000;
+  --color-primary-hover: #222222;
+  --color-success: #2e7d32;
+  --color-error: #d32f2f;
+  --border-radius-md: 6px;
+  --border-radius-lg: 12px;
+}
+
+[data-theme="dark"] {
+  --color-bg-main: #121212;
+  --color-bg-secondary: #1a1a1a;
+  --color-text-main: #ffffff;
+  --color-text-muted: #999999;
+  --color-border: #2d2d2d;
+  --color-primary: #ffffff;
+  --color-primary-hover: #dddddd;
+  --color-success: #4caf50;
+  --color-error: #f44336;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-main);
+  line-height: 1.5;
+}
+a { text-decoration: none; color: inherit; }
+button, input, select { font: inherit; background: none; border: none; }
+
+/* ==========================================================================
+   СЕТКА И МАКЕТ СТРАНИЦЫ (PAGE & LAYOUT)
+   ========================================================================== */
+.page__layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background-color: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar__logo { font-weight: 700; font-size: 22px; margin-bottom: 40px; letter-spacing: -0.5px; }
+.sidebar__list { display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
+.sidebar__link {
+  padding: 12px 16px; border-radius: var(--border-radius-md);
+  color: var(--color-text-muted); font-weight: 500; transition: all 0.2s;
+}
+.sidebar__link:hover { background-color: var(--color-border); color: var(--color-text-main); }
+.sidebar__link--active {
+  background-color: var(--color-primary) !important;
+  color: var(--color-bg-main) !important;
+}
+
+.dashboard { padding: 40px; overflow-y: auto; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+.header__title { font-size: 28px; font-weight: 700; }
+
+/* ==========================================================================
+   КОМПОНЕНТЫ И ЭЛЕМЕНТЫ УПРАВЛЕНИЯ
+   ========================================================================== */
+.button {
+  padding: 12px 20px; font-weight: 500; border-radius: var(--border-radius-md);
+  cursor: pointer; display: inline-flex; justify-content: center; align-items: center; transition: all 0.2s;
+}
+.button--primary { background-color: var(--color-primary); color: var(--color-bg-main); }
+.button--primary:hover { background-color: var(--color-primary-hover); }
+.button--secondary { border: 1px solid var(--color-border); color: var(--color-text-main); }
+.button--secondary:hover { background-color: var(--color-bg-secondary); }
+
+.stats-panel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+.stats-card { background-color: var(--color-bg-secondary); border: 1px solid var(--color-border); padding: 24px; border-radius: var(--border-radius-md); }
+.stats-card__title { font-size: 13px; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 8px; font-weight: 600; letter-spacing: 0.5px; }
+.stats-card__amount { font-size: 32px; font-weight: 700; }
+.stats-card__amount--positive { color: var(--color-success); }
+.stats-card__amount--negative { color: var(--color-error); }
+
+.transaction-module { background-color: var(--color-bg-main); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: 24px; }
+.transaction-module__controls { margin-bottom: 24px; }
+.filter-form { display: flex; gap: 16px; flex-wrap: wrap; }
+.filter-form__group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
+.filter-form__label { font-size: 12px; font-weight: 600; color: var(--color-text-muted); }
+
+.form-input {
+  width: 100%; padding: 10px 14px; background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border); border-radius: var(--border-radius-md); color: var(--color-text-main);
+}
+.form-input:focus { border-color: var(--color-text-main); outline: none; }
+.form-input--select { appearance: none; cursor: pointer; }
+.form-input--error { border-color: var(--color-error) !important; }
+.form__error-message { font-size: 12px; color: var(--color-error); min-height: 16px; margin-top: 2px; display: block; }
+
+/* ==========================================================================
+   ТАБЛИЦА И МОДАЛЬНОЕ ОКНО
+   ========================================================================== */
+.table-wrapper { width: 100%; overflow-x: auto; }
+.transaction-table { width: 100%; border-collapse: collapse; text-align: left; }
+.transaction-table__row { border-bottom: 1px solid var(--color-border); }
+.transaction-table__row:hover { background-color: var(--color-bg-secondary); }
+.transaction-table__heading { padding: 14px 16px; font-size: 12px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; }
+.transaction-table__heading--right { text-align: right; }
+.transaction-table__cell { padding: 16px; font-size: 15px; }
+.transaction-table__cell--right { text-align: right; font-weight: 600; }
+
+.btn-delete { color: var(--color-error); font-weight: 600; cursor: pointer; padding: 4px 8px; border-radius: 4px; transition: background 0.2s; font-size: 13px; }
+.btn-delete:hover { background-color: rgba(211, 47, 47, 0.1); }
+
+.modal { border: none; border-radius: var(--border-radius-lg); background-color: var(--color-bg-main); box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-width: 460px; width: 100%; margin: auto; }
+.modal::backdrop { background-color: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+.modal__content { padding: 32px; }
+.modal__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.modal__title { font-size: 20px; font-weight: 700; }
+.modal__close-btn { font-size: 26px; cursor: pointer; color: var(--color-text-muted); line-height: 1; }
+.modal__close-btn:hover { color: var(--color-text-main); }
+.modal__footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 28px; }
+
+@media (max-width: 768px) {
+  .page__layout { grid-template-columns: 1fr; }
+  .sidebar { padding: 16px; }
+  .stats-panel { grid-template-columns: 1fr; gap: 16px; }
+  .dashboard { padding: 20px; }
+}
