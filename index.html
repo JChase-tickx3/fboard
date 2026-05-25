@@ -20,4 +20,26 @@
       <button id="theme-toggle" class="button button--secondary">Светлая / Темная</button>
     </aside>
 
-    
+    <main class="dashboard">
+      
+      <header class="header">
+        <h1 class="header__title" id="page-title">Обзор финансов</h1>
+        <button id="btn-open-modal" class="button button--primary">Добавить транзацию</button>
+      </header>
+
+      <div id="view-overview" class="view-section">
+        <section class="stats-panel">
+          <div class="stats-card">
+            <h3 class="stats-card__title">Общий баланс</h3>
+            <div id="val-balance" class="stats-card__amount">0 ₸</div>
+          </div>
+          <div class="stats-card">
+            <h3 class="stats-card__title">Доходы (всего)</h3>
+            <div id="val-income" class="stats-card__amount stats-card__amount--positive">0 ₸</div>
+          </div>
+          <div class="stats-card">
+            <h3 class="stats-card__title">Расходы (всего)</h3>
+            <div id="val-expense" class="stats-card__amount stats-card__amount--negative">0 ₸</div>
+          </div>
+        </section>
+      </div>
