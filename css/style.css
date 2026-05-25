@@ -63,3 +63,35 @@ button, input, select { font: inherit; background: none; border: none; }
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
 .header__title { font-size: 28px; font-weight: 700; }
 
+
+.button {
+  padding: 12px 20px; font-weight: 500; border-radius: var(--border-radius-md);
+  cursor: pointer; display: inline-flex; justify-content: center; align-items: center; transition: all 0.2s;
+}
+.button--primary { background-color: var(--color-primary); color: var(--color-bg-main); }
+.button--primary:hover { background-color: var(--color-primary-hover); }
+.button--secondary { border: 1px solid var(--color-border); color: var(--color-text-main); }
+.button--secondary:hover { background-color: var(--color-bg-secondary); }
+
+.stats-panel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+.stats-card { background-color: var(--color-bg-secondary); border: 1px solid var(--color-border); padding: 24px; border-radius: var(--border-radius-md); }
+.stats-card__title { font-size: 13px; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 8px; font-weight: 600; letter-spacing: 0.5px; }
+.stats-card__amount { font-size: 32px; font-weight: 700; }
+.stats-card__amount--positive { color: var(--color-success); }
+.stats-card__amount--negative { color: var(--color-error); }
+
+.transaction-module { background-color: var(--color-bg-main); border: 1px solid var(--color-border); border-radius: var(--border-radius-md); padding: 24px; }
+.transaction-module__controls { margin-bottom: 24px; }
+.filter-form { display: flex; gap: 16px; flex-wrap: wrap; }
+.filter-form__group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
+.filter-form__label { font-size: 12px; font-weight: 600; color: var(--color-text-muted); }
+
+.form-input {
+  width: 100%; padding: 10px 14px; background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border); border-radius: var(--border-radius-md); color: var(--color-text-main);
+}
+.form-input:focus { border-color: var(--color-text-main); outline: none; }
+.form-input--select { appearance: none; cursor: pointer; }
+.form-input--error { border-color: var(--color-error) !important; }
+.form__error-message { font-size: 12px; color: var(--color-error); min-height: 16px; margin-top: 2px; display: block; }
+
