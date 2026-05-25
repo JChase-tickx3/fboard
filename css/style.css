@@ -12,3 +12,15 @@
   --border-radius-lg: 12px;
 }
 
+[data-theme="dark"] {
+  --color-bg-main: #121212;
+  --color-bg-secondary: #1a1a1a;
+  --color-text-main: #ffffff;
+  --color-text-muted: #999999;
+  --color-border: #2d2d2d;
+  --color-primary: #ffffff;
+  --color-primary-hover: #dddddd;
+  --color-success: #4caf50;
+  --color-error: #f44336;
+}
+
