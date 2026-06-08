@@ -1,0 +1,156 @@
+c:\Users\egorg\OneDrive\Рабочий стол\My project for bruhov<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Финансовый дашборд</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="page">
+
+  <div class="page__layout">
+    
+    <aside class="sidebar">
+      <div class="sidebar__logo">КапиталУчёт</div>
+      <nav class="sidebar__list">
+        <a href="#" class="sidebar__link sidebar__link--active" data-view="overview">Обзор</a>
+        <a href="#" class="sidebar__link" data-view="transactions">Транзакции</a>
+        <a href="#" class="sidebar__link" data-view="settings">Настройки</a>
+      </nav>
+      <button id="theme-toggle" class="button button--secondary">Светлая / Темная</button>
+    </aside>
+
+    <main class="dashboard">
+      
+      <header class="header">
+        <h1 class="header__title" id="page-title">Обзор финансов</h1>
+        <button id="btn-open-modal" class="button button--primary">Добавить транзацию</button>
+      </header>
+
+      <div id="view-overview" class="view-section">
+        <section class="stats-panel">
+          <div class="stats-card">
+            <h3 class="stats-card__title">Общий баланс</h3>
+            <div id="val-balance" class="stats-card__amount">0 ₸</div>
+          </div>
+          <div class="stats-card">
+            <h3 class="stats-card__title">Доходы (всего)</h3>
+            <div id="val-income" class="stats-card__amount stats-card__amount--positive">0 ₸</div>
+          </div>
+          <div class="stats-card">
+            <h3 class="stats-card__title">Расходы (всего)</h3>
+            <div id="val-expense" class="stats-card__amount stats-card__amount--negative">0 ₸</div>
+          </div>
+        </section>
+      </div>
+
+      <div id="view-transactions" class="view-section" style="display: none;">
+        <section class="transaction-module">
+          <div class="transaction-module__controls">
+            <form id="filter-form" class="filter-form">
+              <div class="filter-form__group">
+                <label class="filter-form__label">Тип операции</label>
+                <select id="filter-type" class="form-input form-input--select">
+                  <option value="all">Все типы</option>
+                  <option value="income">Доход</option>
+                  <option value="expense">Расход</option>
+                </select>
+              </div>
+
+              <div class="filter-form__group">
+                <label class="filter-form__label">Категория</label>
+                <select id="filter-category" class="form-input form-input--select">
+                  <option value="all">Все категории</option>
+                </select>
+              </div>
+
+              <div class="filter-form__group">
+                <label class="filter-form__label">Поиск</label>
+                <input type="text" id="filter-search" class="form-input" placeholder="Поиск по категории...">
+              </div>
+            </form>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="transaction-table">
+              <thead>
+                <tr class="transaction-table__row">
+                  <th class="transaction-table__heading">Дата</th>
+                  <th class="transaction-table__heading">Описание / Телефон</th>
+                  <th class="transaction-table__heading">Категория</th>
+                  <th class="transaction-table__heading transaction-table__heading--right">Сумма</th>
+                  <th class="transaction-table__heading" style="width: 50px;"></th>
+                </tr>
+              </thead>
+              <tbody id="transaction-list">
+                </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div id="view-settings" class="view-section" style="display: none;">
+        <section class="transaction-module">
+          <h3 style="margin-bottom: 8px; font-size: 18px; font-weight: 600;">Параметры интерфейса</h3>
+          <p style="color: var(--color-text-muted); font-size: 14px; margin-bottom: 24px;">Конфигурация вашей локальной сессии</p>
+          
+          <div class="filter-form__group" style="max-width: 320px;">
+            <label class="filter-form__label">Базовая валюта</label>
+            <select id="settings-currency" class="form-input form-input--select">
+              <option value="KZT">Казахстанский тенге (₸)</option>
+              <option value="USD">Доллар США ($)</option>
+              <option value="EUR">Евро (€)</option>
+              <option value="RUB">Российский рубль (₽)</option>
+            </select>
+          </div>
+        </section>
+      </div>
+
+    </main>
+  </div>
+
+  <dialog id="modal-transaction" class="modal">
+    <div class="modal__content">
+      <div class="modal__header">
+        <h3 class="modal__title">Новая запись</h3>
+        <span id="btn-close-x" class="modal__close-btn">&times;</span>
+      </div>
+      
+      <form id="form-transaction">
+        <div class="filter-form__group">
+          <label class="filter-form__label">Сумма (₸)</label>
+          <input type="text" id="tx-amount" class="form-input" placeholder="Введите сумму">
+          <span class="form__error-message"></span>
+        </div>
+
+        <div class="filter-form__group" style="margin-top: 16px;">
+          <label class="filter-form__label">Тип</label>
+          <select id="tx-type" class="form-input form-input--select">
+            <option value="income">Доход</option>
+            <option value="expense">Расход</option>
+          </select>
+        </div>
+
+        <div class="filter-form__group" style="margin-top: 16px;">
+          <label class="filter-form__label">Категория</label>
+          <input type="text" id="tx-category" class="form-input" placeholder="Продукты, Зарплата, Счёт...">
+          <span class="form__error-message"></span>
+        </div>
+
+        <div class="filter-form__group" style="margin-top: 16px;">
+          <label class="filter-form__label">Телефон получателя (необязательно)</label>
+          <input type="text" id="tx-phone" class="form-input" placeholder="+7 (___) ___-__-__">
+          <span class="form__error-message"></span>
+        </div>
+
+        <div class="modal__footer">
+          <button type="button" id="btn-cancel" class="button button--secondary">Отмена</button>
+          <button type="submit" class="button button--primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="./js/main.js"></script>
+</body>
+</html
